@@ -2,7 +2,7 @@ import { jsPDF } from 'jspdf';
 import pdfMake from 'pdfmake';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
-test('jsPDF PDF generation test.', () => {
+test.skip('jsPDF PDF generation test.', () => {
     // Default export is a4 paper, portrait, using millimeters for units
     const doc = new jsPDF({
         format: 'letter',
@@ -82,7 +82,12 @@ test('pdfmake PDF generation test.', () => {
     const fs = require('fs');
 
     const pageMargins = mmToPoints(10);
-    const firstColumnWidth = (mmToPoints(215.9) - pageMargins * 2) / 9 - 1;
+
+    const fontSizeBig = 10;
+    const fontSizeMedium = 9;
+    const fontSizeSmall = 8;
+
+    const cellHeight = 8;
 
     const docDefinition: TDocumentDefinitions = {
         pageSize: {
@@ -95,7 +100,7 @@ test('pdfmake PDF generation test.', () => {
             {
                 layout: tableLayouts.withoutPadding,
                 table: {
-                    widths: generateEqualSizedColumns(9, firstColumnWidth),
+                    widths: generatePercentageColumns(9, '11.11%'),
                     body: [
                         [
                             {
@@ -112,7 +117,7 @@ test('pdfmake PDF generation test.', () => {
                                 colSpan: 3,
                                 border: [false, true, false, false],
                                 text: 'REPÚBLICA DE COLOMBIA',
-                                fontSize: 10,
+                                fontSize: fontSizeBig,
                                 bold: true,
                                 alignment: 'center',
                             },
@@ -130,7 +135,7 @@ test('pdfmake PDF generation test.', () => {
                                 colSpan: 3,
                                 border: [false, false, false, false],
                                 text: '\nFORMATO No. 1',
-                                fontSize: 10,
+                                fontSize: fontSizeBig,
                                 bold: true,
                                 alignment: 'center',
                             },
@@ -150,12 +155,14 @@ test('pdfmake PDF generation test.', () => {
                                                         text: 'Ciudad y fecha de expedición certificación:\n',
                                                         alignment: 'right',
                                                         bold: true,
-                                                        fontSize: 9,
+                                                        fontSize:
+                                                            fontSizeMedium,
                                                     },
                                                     {
-                                                        text: 'asdfasdfadsf',
+                                                        text: 'TUNJA, 03 de enero de 2019',
                                                         alignment: 'right',
-                                                        fontSize: 9,
+                                                        fontSize:
+                                                            fontSizeMedium,
                                                     },
                                                 ],
                                             },
@@ -169,7 +176,7 @@ test('pdfmake PDF generation test.', () => {
                         [
                             '',
                             {
-                                colSpan: 8,
+                                colSpan: fontSizeSmall,
                                 border: [false, false, true, false],
                                 layout: tableLayouts.withoutPaddingAndLines,
                                 table: {
@@ -181,11 +188,11 @@ test('pdfmake PDF generation test.', () => {
                                                     {
                                                         text: 'CERTIFICADO DE INFORMACIÓN LABORAL\n',
                                                         bold: true,
-                                                        fontSize: 10,
+                                                        fontSize: fontSizeBig,
                                                     },
                                                     {
                                                         text: 'Usar únicamente para certificar tiempos cotizados a Cajas públicas diferentes al ISS o tiempos no cotizados',
-                                                        fontSize: 8,
+                                                        fontSize: fontSizeSmall,
                                                     },
                                                 ],
                                                 alignment: 'center',
@@ -203,7 +210,8 @@ test('pdfmake PDF generation test.', () => {
                                                                     true,
                                                                 ],
                                                                 text: 'Hoja',
-                                                                fontSize: 9,
+                                                                fontSize:
+                                                                    fontSizeMedium,
                                                             },
                                                             {
                                                                 border: [
@@ -213,7 +221,8 @@ test('pdfmake PDF generation test.', () => {
                                                                     true,
                                                                 ],
                                                                 text: '1',
-                                                                fontSize: 9,
+                                                                fontSize:
+                                                                    fontSizeMedium,
                                                             },
                                                             {
                                                                 border: [
@@ -223,7 +232,8 @@ test('pdfmake PDF generation test.', () => {
                                                                     true,
                                                                 ],
                                                                 text: 'de',
-                                                                fontSize: 9,
+                                                                fontSize:
+                                                                    fontSizeMedium,
                                                             },
                                                             {
                                                                 border: [
@@ -233,7 +243,8 @@ test('pdfmake PDF generation test.', () => {
                                                                     true,
                                                                 ],
                                                                 text: '1',
-                                                                fontSize: 9,
+                                                                fontSize:
+                                                                    fontSizeMedium,
                                                             },
                                                         ],
                                                     ],
@@ -258,7 +269,7 @@ test('pdfmake PDF generation test.', () => {
                                 text: 'Diligenciar este formato de acuerdo a lo especificado en el instructivo.',
                                 margin: [3, 0],
                                 bold: true,
-                                fontSize: 9,
+                                fontSize: fontSizeMedium,
                             },
                             '',
                             '',
@@ -270,7 +281,7 @@ test('pdfmake PDF generation test.', () => {
                                 text: 'Número consecutivo:',
                                 margin: [5, 0],
                                 alignment: 'right',
-                                fontSize: 9,
+                                fontSize: fontSizeMedium,
                             },
                             '',
                             {
@@ -278,7 +289,7 @@ test('pdfmake PDF generation test.', () => {
                                 text: '1',
                                 margin: [5, 0],
                                 alignment: 'left',
-                                fontSize: 9,
+                                fontSize: fontSizeMedium,
                             },
                             '',
                         ],
@@ -289,7 +300,7 @@ test('pdfmake PDF generation test.', () => {
                 text: 'A. IDENTIFICACIÓN DE LA ENTIDAD QUE CERTIFICA',
                 alignment: 'center',
                 bold: true,
-                fontSize: 9,
+                fontSize: fontSizeSmall,
             },
             {
                 layout: tableLayouts.withoutPadding,
@@ -299,7 +310,7 @@ test('pdfmake PDF generation test.', () => {
                         [
                             {
                                 table: {
-                                    widths: ['auto', '*', 'auto', '*'],
+                                    widths: ['20%', '60%', '5%', '15%'],
                                     body: [
                                         [
                                             {
@@ -311,7 +322,7 @@ test('pdfmake PDF generation test.', () => {
                                                 ],
                                                 text: '1. Nombre o Razón Social:',
                                                 bold: true,
-                                                fontSize: 9,
+                                                fontSize: fontSizeSmall,
                                             },
                                             {
                                                 border: [
@@ -321,7 +332,8 @@ test('pdfmake PDF generation test.', () => {
                                                     false,
                                                 ],
                                                 text: 'GERENCIA DE PROYECTOS Y SOLUCIONES GPS',
-                                                fontSize: 9,
+                                                noWrap: true,
+                                                fontSize: fontSizeSmall,
                                             },
                                             {
                                                 border: [
@@ -332,7 +344,7 @@ test('pdfmake PDF generation test.', () => {
                                                 ],
                                                 text: '2. NIT',
                                                 bold: true,
-                                                fontSize: 9,
+                                                fontSize: fontSizeSmall,
                                             },
                                             {
                                                 border: [
@@ -341,8 +353,8 @@ test('pdfmake PDF generation test.', () => {
                                                     false,
                                                     false,
                                                 ],
-                                                text: 'XXXXXXXXX-X',
-                                                fontSize: 9,
+                                                text: '900921344-5',
+                                                fontSize: fontSizeSmall,
                                             },
                                         ],
                                     ],
@@ -353,12 +365,12 @@ test('pdfmake PDF generation test.', () => {
                             {
                                 table: {
                                     widths: [
-                                        'auto',
-                                        '*',
-                                        'auto',
-                                        '*',
-                                        'auto',
-                                        '*',
+                                        '11%',
+                                        '19%',
+                                        '9%',
+                                        '42%',
+                                        '10%',
+                                        '9%',
                                     ],
                                     body: [
                                         [
@@ -371,7 +383,7 @@ test('pdfmake PDF generation test.', () => {
                                                 ],
                                                 text: '3. Dirección:',
                                                 bold: true,
-                                                fontSize: 9,
+                                                fontSize: fontSizeSmall,
                                             },
                                             {
                                                 border: [
@@ -381,7 +393,7 @@ test('pdfmake PDF generation test.', () => {
                                                     false,
                                                 ],
                                                 text: 'Av. Unv # 45 - 102 Oficina',
-                                                fontSize: 9,
+                                                fontSize: fontSizeSmall,
                                             },
                                             {
                                                 border: [
@@ -392,7 +404,7 @@ test('pdfmake PDF generation test.', () => {
                                                 ],
                                                 text: '4. Ciudad:',
                                                 bold: true,
-                                                fontSize: 9,
+                                                fontSize: fontSizeSmall,
                                             },
                                             {
                                                 border: [
@@ -402,7 +414,7 @@ test('pdfmake PDF generation test.', () => {
                                                     false,
                                                 ],
                                                 text: 'TUNJA',
-                                                fontSize: 9,
+                                                fontSize: fontSizeSmall,
                                             },
                                             {
                                                 border: [
@@ -413,7 +425,7 @@ test('pdfmake PDF generation test.', () => {
                                                 ],
                                                 text: 'Código DANE',
                                                 bold: true,
-                                                fontSize: 9,
+                                                fontSize: fontSizeSmall,
                                             },
                                             {
                                                 border: [
@@ -424,7 +436,615 @@ test('pdfmake PDF generation test.', () => {
                                                 ],
                                                 text: '0001',
                                                 alignment: 'center',
-                                                fontSize: 9,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                        ],
+                                    ],
+                                },
+                            },
+                        ],
+                        [
+                            {
+                                table: {
+                                    widths: ['29%', '14%', '43%', '10%', '4%'],
+                                    body: [
+                                        [
+                                            {
+                                                border: [
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '',
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    false,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: '5. Departamento:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: 'BOYACÁ',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    false,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'Código DANE',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '15',
+                                                alignment: 'center',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                        ],
+                                    ],
+                                },
+                            },
+                        ],
+                        [
+                            {
+                                table: {
+                                    widths: [
+                                        '10%',
+                                        '19%',
+                                        '6%',
+                                        '21%',
+                                        '8%',
+                                        '36%',
+                                    ],
+                                    body: [
+                                        [
+                                            {
+                                                border: [
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '6. Teléfono:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    false,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: '745 2923',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '7. Fax:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    false,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: '',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '8. E-Mail:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: 'info@gerprosol.com',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                        ],
+                                    ],
+                                },
+                            },
+                        ],
+                    ],
+                },
+            },
+            {
+                text: 'B. IDENTIFICACIÓN DEL EMPLEADOR POR EL CUAL SE CERTIFICA TIEMPO',
+                alignment: 'center',
+                bold: true,
+                fontSize: fontSizeSmall,
+            },
+            {
+                layout: tableLayouts.withoutPaddingAndLines,
+                table: {
+                    widths: ['*'],
+                    body: [
+                        [
+                            {
+                                table: {
+                                    widths: ['22%', '55%', '6%', '17%'],
+                                    body: [
+                                        [
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '9. Nombre o Razón Social:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'GERENCIA DE PROYECTOS Y SOLUCIONES',
+                                                noWrap: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: '10. NIT',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: '90021344-5',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                        ],
+                                    ],
+                                },
+                            },
+                        ],
+                        [
+                            {
+                                table: {
+                                    widths: [
+                                        '11%',
+                                        '20%',
+                                        '9%',
+                                        '41%',
+                                        '10%',
+                                        '9%',
+                                    ],
+                                    body: [
+                                        [
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '11. Dirección:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'AVENIDA UNIVERSITARIA #',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '12. Ciudad:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'TUNJA',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: 'Código DANE',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: '0001',
+                                                alignment: 'center',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                        ],
+                                    ],
+                                },
+                            },
+                        ],
+                        [
+                            {
+                                table: {
+                                    widths: ['29%', '14%', '43%', '10%', '4%'],
+                                    body: [
+                                        [
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '',
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: '13. Departamento:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: 'BOYACÁ',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'Código DANE',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: '15',
+                                                alignment: 'center',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                        ],
+                                    ],
+                                },
+                            },
+                        ],
+                        [
+                            {
+                                table: {
+                                    widths: [
+                                        '8%',
+                                        '2%',
+                                        '32%',
+                                        '11%',
+                                        '12%',
+                                        '17%',
+                                        '6%',
+                                        '6%',
+                                        '6%',
+                                    ],
+                                    body: [
+                                        [
+                                            {
+                                                rowSpan: 3,
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    true,
+                                                ],
+                                                text: '14. Sector (Marcar solo uno).',
+                                                alignment: 'center',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '',
+                                                alignment: 'center',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'Sector Público Nacional',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '15. E-Mail:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                colSpan: 5,
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'gerencia@gerprosol.com',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            '',
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: 'X',
+                                                alignment: 'center',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'Sector Público Departamental o Distrital',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '16. Teléfono:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: '3163554130',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                rowSpan: 2,
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    true,
+                                                ],
+                                                text: '18. Fecha en que entró en vigencia el SGP para ese empleador.',
+                                                italics: true,
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'Día',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    false,
+                                                    false,
+                                                ],
+                                                text: 'Mes',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                ],
+                                                text: 'Año',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                        ],
+                                        [
+                                            '',
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    true,
+                                                ],
+                                                text: '',
+                                                alignment: 'center',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    true,
+                                                ],
+                                                text: 'Sector Público Municipal',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    true,
+                                                ],
+                                                text: '17. Fax:',
+                                                bold: true,
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    false,
+                                                    true,
+                                                    false,
+                                                    true,
+                                                ],
+                                                text: '',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            '',
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    true,
+                                                ],
+                                                text: '01',
+                                                alignment: 'center',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    true,
+                                                ],
+                                                text: '01',
+                                                alignment: 'center',
+                                                fontSize: fontSizeSmall,
+                                            },
+                                            {
+                                                border: [
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    true,
+                                                ],
+                                                text: '1996',
+                                                alignment: 'center',
+                                                fontSize: fontSizeSmall,
                                             },
                                         ],
                                     ],
@@ -445,8 +1065,8 @@ test('pdfmake PDF generation test.', () => {
 });
 
 function mmToPoints(mm: number) {
-    const inches = mm / 25.4;
-    return inches * 72.0;
+    const inches = mm * 0.03937;
+    return inches * 72;
 }
 
 function emptyTopLeftCell() {
@@ -479,4 +1099,8 @@ function emptyCell() {
 
 function generateEqualSizedColumns(amount: number, size: number) {
     return Array(amount).fill(size);
+}
+
+function generatePercentageColumns(amount: number, percentage: string) {
+    return Array(amount).fill(percentage);
 }
