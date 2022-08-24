@@ -1,0 +1,237 @@
+openapi: 3.0.0
+info:
+  title: "PDF Generator"
+  version: "0.1"
+servers: [
+  url: "localhost:3000"
+]
+paths:
+  /formato1:
+    post:
+      requestBody:
+        description: "Generates the 'Formato 1' document from the information provided on the JSON object."
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/Formato1"
+      responses:
+        '200':
+          description: "Document generated."
+
+components:
+  schemas:
+    Formato1:
+      type: object
+      properties:
+        certificationCityAndDate:
+          $ref: "#/components/schemas/CertificationCityAndDate"
+        consecutiveNumber:
+          type: number
+        certificationEntity:
+          $ref: "#/components/schemas/CertificationEntity"
+        employer:
+          $ref: "#/components/schemas/Employer"
+        worker:
+          $ref: "#/components/schemas/Worker"
+        laboralVinculations:
+          $ref: "#/components/schemas/LaboralVinculations"
+        pensionContributions:
+          $ref: "#/components/schemas/PensionContributions"
+        isMigrantWorker:
+          $ref: "#/components/schemas/IsMigrantWorker"
+        substituteCompensation:
+          $ref: "#/components/schemas/SubstituteCompensation"
+        certificationOfficial:
+          type: string
+        certificationOfficialDocument:
+          type: string
+        officialSignature:
+          type: string
+        officialPosition:
+          type: string
+        administrativeAct:
+          type: string
+        projected:
+          type: string
+    CertificationCityAndDate:
+      type: object
+      properties:
+        city:
+          type: string
+        date:
+          $ref: "#/components/schemas/Date"
+    CertificationEntity:
+      type: object
+      properties:
+        name:
+          type: string
+        NIT:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        DANECode:
+          type: string
+        department:
+          type: string
+        departmentDANECode:
+          type: string
+        phone:
+          type: string
+        fax:
+          type: string
+        email:
+          type: string
+    Employer:
+      type: object
+      properties:
+        name:
+          type: string
+        NIT:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        DANECode:
+          type: string
+        department:
+          type: string
+        departmentDANECode:
+          type: string
+        phone:
+          type: string
+        fax:
+          type: string
+        email:
+          type: string
+        SGPDate:
+          $ref: "#/components/schemas/Date"
+        sector:
+          type: number
+          enum: [0, 1, 2]
+    Worker:
+      type: object
+      properties:
+        name:
+          type: string
+        documentType:
+          type: number
+          enum:
+            - 0
+            - 1
+            - 2
+        document:
+          type: string
+        birthdate:
+          $ref: "#/components/schemas/Date"
+        alternateName:
+          type: string
+        alternateDocument:
+          type: string
+        alternateDocumentType:
+          type: number
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+    LaboralVinculations:
+      type: array
+      items:
+        $ref: "#/components/schemas/LaboralVinculation"
+    PensionContributions:
+      type: array
+      items: 
+      $ref: "#/components/schemas/PensionContribution"
+    LaboralVinculation:
+      type: object
+      properties:
+        employer:
+          type: string
+        position:
+          type: string
+        totalInterruptionDays:
+          type: number
+        vinculation:
+          $ref: "#/components/schemas/Timespan"
+        interruptions:
+          $ref: "#/components/schemas/Timespan"
+    PensionContribution:
+      type: object
+      properties:
+        contributionEntity:
+          type: string
+        contributionEntityNITOrCode:
+          type: string
+        respondingEntity:
+          type: string
+        respondingEntityNIT:
+          type: string
+        hasEmployeeSocialSecurityDiscount:
+          type: boolean
+        isRespondingEntityRespondingForPeriod:
+          type: boolean
+        contributionPeriod:
+          $ref: "#/components/schemas/Timespan"
+    IsMigrantWorker:
+      type: object
+      properties:
+        value:
+          type: boolean
+        workedWeeks:
+          type: number
+    SubstituteCompensation:
+      type: object
+      properties:
+        substituteCompensationCertification:
+          type: number
+        pensionCertification:
+          type: number
+        kindOfPensionCertification:
+          type: object
+          properties:
+            pensionResolutionNumber:
+              type: number
+            pensionDate:
+              $ref: "#/components/schemas/Date"
+            pensionType:
+              type: number
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                - 4
+                - 5
+                - 6
+                - 7
+                - 8
+        hasOtherEntity:
+          type: object
+          properties:
+            value:
+              type: boolean
+            otherEntity:
+              type: string
+            otherEntityNIT:
+              type: string
+    Timespan:
+      type: object
+      properties:
+        from:
+          $ref: "#/components/schemas/Date"
+        to:
+          $ref: "#/components/schemas/Date"
+    Date:
+      type: object
+      properties:
+        day:
+          type: number
+        month:
+          type: number
+        year:
+          type: number
+
