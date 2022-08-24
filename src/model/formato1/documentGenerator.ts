@@ -1,5 +1,4 @@
 import pdfmake from 'pdfmake';
-import fs from 'fs';
 import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { mmToPoints } from '../table/pdfFunctions';
 import { fonts, fontSizes } from '../../util/resources';
@@ -20,11 +19,14 @@ export function parseJsonToDocumentFields(json: any): Formato1Fields[] {
     return [json];
 }
 
-export function generatePdf(documentDefinition: TDocumentDefinitions) {
+export function generatePdf(
+    documentDefinition: TDocumentDefinitions,
+    callback: (document: NodeJS.ReadableStream) => void
+) {
     const printer = new pdfmake(fonts);
     const pdfDoc = printer.createPdfKitDocument(documentDefinition);
 
-    pdfDoc.pipe(fs.createWriteStream('pdfmake.pdf'));
+    callback(pdfDoc);
     pdfDoc.end();
 }
 

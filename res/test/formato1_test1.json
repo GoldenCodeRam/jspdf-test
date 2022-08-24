@@ -31,12 +31,12 @@
         "phone": "7452923",
         "fax": "123456789",
         "email": "info@gerprosol.com",
+        "sector": 2,
         "SGPDate": {
             "day": 22,
             "month": 8,
             "year": 2022
-        },
-        "sector": 2
+        }
     },
     "worker": {
         "name": "Hernández Millan Alvaro Ramiro",
