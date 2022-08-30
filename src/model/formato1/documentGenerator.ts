@@ -16,6 +16,7 @@ import { generateTable7 } from './tables/table7';
 import { generateTable8 } from './tables/table8';
 
 export function parseJsonToDocumentFields(json: any): Formato1Fields[] {
+    // TODO: Here we should generate some checks for the data that is being processed.
     return [json];
 }
 
