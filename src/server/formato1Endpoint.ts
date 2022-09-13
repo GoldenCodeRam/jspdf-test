@@ -3,7 +3,7 @@ import {
     generateDocumentDefinition,
     generatePdf,
     parseJsonToDocumentFields,
-} from '../model/formato1/documentGenerator';
+} from '../model/formats/formato1/documentGenerator';
 
 export function generateFormato1Endpoint(app: express.Express) {
     app.post('/formato1', (request, response) => {

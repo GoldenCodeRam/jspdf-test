@@ -1,5 +1,5 @@
 import express from 'express';
-import EmployeeChecklistDocumentGenerator from '../model/employeeChecklist/documentGenerator';
+import EmployeeChecklistDocumentGenerator from '../model/formats/employeeChecklist/documentGenerator';
 
 export function generateEmployeeChecklistEndpoint(app: express.Express) {
     app.post('/employeeChecklist', (request, response) => {
