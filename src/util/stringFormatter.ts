@@ -8,18 +8,17 @@ export class StringFormatter {
 
     constructor(private _value: string) {}
 
-    public addColon(): StringFormatter {
-        this._value += ':';
-        return this;
-    }
-
-    public addLineFeed(): StringFormatter {
-        this._value += '\n';
-        return this;
-    }
-
+    /**
+    * This function is made so it can append a number at the start of the
+    * field.
+    */
     public addConsecutiveNumber(consecutive: number): StringFormatter {
         this._value = `${consecutive}. ${this._value}`;
+        return this;
+    }
+
+    public addColon(): StringFormatter {
+        this._value  += ':';
         return this;
     }
 }

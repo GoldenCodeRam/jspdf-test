@@ -1,5 +1,6 @@
 export const images = {
     colombianShield: 'res/img/escudo_colombia.png',
+    logoBoyaca: 'res/img/logo_gob_boyaca.png',
 };
 
 export const fonts = {
@@ -10,10 +11,3 @@ export const fonts = {
         bolditalics: 'res/fonts/Roboto-MediumItalic.ttf',
     },
 };
-
-export const fontSizes = {
-    tiny: 7,
-    smaller: 8,
-    small: 9,
-    normal: 11,
-}
